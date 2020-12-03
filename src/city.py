@@ -10,15 +10,4 @@ class City:
         for k, v in kwargs.items():
             setattr(self, k, v)
 
-    def zipcodes(self, cursor):
-        query_str = "SELECT zipcodes.* FROM zipcodes WHERE city_id = %s"
-        cursor.execute(query_str, (self.id,))
-        records = cursor.fetchall()
-        return build_from_records(Zipcode, records)
-
-    def state(self, cursor):
-        query_str = "SELECT states.* FROM states WHERE id = %s"
-        cursor.execute(query_str, (self.state_id,))
-        record = cursor.fetchone()
-        return build_from_record(State, record)
 

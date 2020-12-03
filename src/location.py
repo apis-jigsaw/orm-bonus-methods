@@ -11,14 +11,3 @@ class Location:
         for k, v in kwargs.items():
             setattr(self, k, v)
 
-    def venue(self, cursor):
-        query_str = "SELECT * FROM venues WHERE id = %s"
-        cursor.execute(query_str, (self.venue_id,))
-        record = cursor.fetchone()
-        return build_from_record(Venue, record)
-
-    def zipcode(self, cursor):
-        query_str = "SELECT * FROM zipcodes WHERE id = %s"
-        cursor.execute(query_str, (self.zipcode_id,))
-        record = cursor.fetchone()
-        return build_from_record(Zipcode, record)

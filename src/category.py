@@ -28,12 +28,5 @@ class Category:
             category = self.find_by_name(name, cursor)
         return category
 
-    def venues(self, cursor):
-        venues_query = """SELECT venues.* FROM venues 
-        JOIN venue_categories ON venue_categories.venue_id = venues.id 
-        WHERE venue_categories.category_id = %s"""
-        cursor.execute(venues_query, (self.id,))
-        venue_records = cursor.fetchall()
-        return src.build_from_records(src.Venue, venue_records)
 
 
