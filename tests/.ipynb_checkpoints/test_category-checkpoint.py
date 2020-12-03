@@ -99,5 +99,5 @@ def tourist_spot():
 def test_category_venues(tourist_spot):
     venues = tourist_spot.venues(test_cursor)
     category_names = [venue.name for venue in venues]
-    assert set(category_names) == set(['Los Tacos Al Pastor', 'Grimaldis'])
+    assert category_names == ['Los Tacos Al Pastor', 'Grimaldis']
     
