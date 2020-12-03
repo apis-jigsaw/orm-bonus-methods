@@ -26,7 +26,8 @@ class Venue():
 
     def categories(self, cursor):
         categories_query = """SELECT categories.* FROM venue_categories 
-        JOIN categories ON venue_categories.category_id = categories.id WHERE venue_categories.venue_id = %s"""
+        JOIN categories ON venue_categories.category_id = categories.id 
+        WHERE venue_categories.venue_id = %s"""
         cursor.execute(categories_query, (self.id,))
         venue_records = cursor.fetchall()
         return src.build_from_records(src.Category, venue_records)
