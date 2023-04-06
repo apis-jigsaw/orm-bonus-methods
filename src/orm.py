@@ -1,3 +1,20 @@
+def filter_by(cursor, cls, attrs = {}):
+    if not attrs:
+        return find_all(cls, cursor, limit = 10)
+    query = f"select * from {cls.__table__} "
+    filter_clause = ' and '.join([f"{k} = %s" for k in attrs.keys()])
+    cursor.execute(f"{query} where {filter_clause}", tuple(attrs.values()))
+    records = cursor.fetchall()
+    return [build_from_record(cls, record) for record in records]
+    
+def paginate_by(cursor, cls, page_number = 1, per_page = 10):
+    query = f"""SELECT * FROM {cls.__table__} 
+    LIMIT {per_page} OFFSET {(page_number - 1) * per_page}"""
+    
+    cursor.execute(query)
+    records = cursor.fetchall()
+    return [build_from_record(cls, record) for record in records]
+
 def build_from_record(Class, record):
     if not record: return None
 
@@ -10,8 +27,8 @@ def build_from_records(Class, records):
     return [build_from_record(Class, record) for record in records]
 
 
-def find_all(Class, cursor):
-    sql_str = f"SELECT * FROM {Class.__table__}"
+def find_all(Class, cursor, limit = 10):
+    sql_str = f"SELECT * FROM {Class.__table__} limit {limit}"
     cursor.execute(sql_str)
     records = cursor.fetchall()
     return [build_from_record(Class, record) for record in records]

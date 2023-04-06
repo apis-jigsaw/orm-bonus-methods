@@ -1,6 +1,6 @@
 import psycopg2
 
-test_conn = psycopg2.connect(dbname = 'foursquare_test', user = 'postgres', password = 'postgres')
+test_conn = psycopg2.connect(dbname = 'test_foursquare', user = 'postgres', password = 'postgres')
 test_cursor = test_conn.cursor()
 
 def drop_records(cursor, conn, table_name):
